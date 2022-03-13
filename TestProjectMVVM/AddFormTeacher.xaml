@@ -1,0 +1,25 @@
+﻿<Window x:Class="TestProjectMVVM.AddFormTeacher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestProjectMVVM"
+        mc:Ignorable="d"
+        Title="Добавить Студента" Height="400" Width="500">
+    <Window.DataContext>
+        <local:AddFormView></local:AddFormView>
+    </Window.DataContext>
+    <Grid>
+        <StackPanel>
+            <Label HorizontalContentAlignment="Center" Content="ФИО"/>
+            <TextBox Text="{Binding Fio ,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+            <Label HorizontalContentAlignment="Center" Content="Предмет"/>
+            <TextBox Text="{Binding Facility,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+
+            <Button Command="{Binding AddButtonTeacher,UpdateSourceTrigger=PropertyChanged}" Margin="0,30,0,0" Width="200">Добавить
+            </Button>
+            <Button Command="{Binding CloseButton,UpdateSourceTrigger=PropertyChanged}" Margin="0,30,0,0" Width="200">Отменить
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

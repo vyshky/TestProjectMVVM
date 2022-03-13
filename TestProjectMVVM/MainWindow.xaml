@@ -1,0 +1,75 @@
+﻿<Window x:Class="TestProjectMVVM.MainWindow"      
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestProjectMVVM"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <local:ViewModel></local:ViewModel>
+    </Window.DataContext>
+    <Window.Resources>
+        <!--Шаблон вывода продуктов на экран-->
+        <DataTemplate x:Key="StudentsList">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="{Binding Path=FIO, 
+                            UpdateSourceTrigger=PropertyChanged}" FontSize="16"></Label>
+
+                <Label Grid.Column="1" 
+                               Content="{Binding Path=Group, UpdateSourceTrigger=PropertyChanged}"></Label>
+                <Label Grid.Column="2" 
+                       Content="{Binding Path=GradePointAverage, UpdateSourceTrigger=PropertyChanged}"></Label>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="TeachersList">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Label Content="{Binding Path=FIO, 
+                            UpdateSourceTrigger=PropertyChanged}" FontSize="16"></Label>
+
+                <Label Grid.Column="1" 
+                               Content="{Binding Path=Facility, UpdateSourceTrigger=PropertyChanged}"></Label>              
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
+            <Button Command="{Binding AddStudent,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить студента</Button>
+            <Button Command="{Binding DeleteButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
+            <Button Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>            
+        </WrapPanel>
+        
+        <WrapPanel Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" >
+            <Button Command="{Binding AddTeacher,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить преподавателя</Button>            
+            <Button Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
+            <Button Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>            
+        </WrapPanel>
+
+        <ListBox ItemsSource="{Binding Path=Students, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource StudentsList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></ListBox>
+        <ListBox ItemsSource="{Binding Teachers, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource TeachersList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="2"></ListBox>
+
+    </Grid>
+</Window>
