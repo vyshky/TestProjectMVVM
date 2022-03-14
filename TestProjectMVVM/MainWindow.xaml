@@ -39,7 +39,7 @@
                             UpdateSourceTrigger=PropertyChanged}" FontSize="16"></Label>
 
                 <Label Grid.Column="1" 
-                               Content="{Binding Path=Facility, UpdateSourceTrigger=PropertyChanged}"></Label>              
+                               Content="{Binding Path=Facility, UpdateSourceTrigger=PropertyChanged}"></Label>
             </Grid>
         </DataTemplate>
     </Window.Resources>
@@ -59,16 +59,16 @@
         <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
             <Button Command="{Binding AddStudent,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить студента</Button>
             <Button Command="{Binding DeleteButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
-            <Button Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>            
-        </WrapPanel>
-        
-        <WrapPanel Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" >
-            <Button Command="{Binding AddTeacher,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить преподавателя</Button>            
-            <Button Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
-            <Button Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>            
+            <Button Command="{Binding ChangeButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>
         </WrapPanel>
 
-        <ListBox ItemsSource="{Binding Path=Students, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource StudentsList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></ListBox>
+        <WrapPanel Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" >
+            <Button Command="{Binding AddTeacher,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить преподавателя</Button>
+            <Button Command="{Binding DeleteButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
+            <Button Command="{Binding ChangeButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>
+        </WrapPanel>
+
+        <ListBox ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource StudentsList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></ListBox>
         <ListBox ItemsSource="{Binding Teachers, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource TeachersList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="2"></ListBox>
 
     </Grid>

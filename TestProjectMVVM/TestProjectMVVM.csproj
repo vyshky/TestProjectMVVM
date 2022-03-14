@@ -79,6 +79,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ChangeFormTeacher.xaml.cs">
+      <DependentUpon>ChangeFormTeacher.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ChangeFormStudent.xaml.cs">
+      <DependentUpon>ChangeFormStudent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddFormTeacher.xaml.cs">
       <DependentUpon>AddFormTeacher.xaml</DependentUpon>
     </Compile>
@@ -90,6 +96,14 @@
     <Compile Include="Model\SelectedItem.cs" />
     <Compile Include="ViewModel\AddFormView.cs" />
     <Compile Include="ViewModel\ViewModel.cs" />
+    <Page Include="ChangeFormTeacher.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ChangeFormStudent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="AddFormTeacher.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

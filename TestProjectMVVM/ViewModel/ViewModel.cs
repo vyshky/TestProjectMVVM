@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Linq;
+using System.Windows;
 
 namespace TestProjectMVVM
 {
@@ -20,6 +21,8 @@ namespace TestProjectMVVM
         SchoolContext _schoolContext;
         public static AddFormStudent addFormStudent;
         public static AddFormTeacher addFormTeacher;
+        public static ChangeFormStudent changeFormStudent;
+        public static ChangeFormTeacher changeFormTeacher;
 
         public ViewModel()
         {
@@ -37,7 +40,7 @@ namespace TestProjectMVVM
                     () =>
                     {
                         addFormStudent = new AddFormStudent();
-                        addFormStudent.ShowDialog();                        
+                        addFormStudent.ShowDialog();
                         RefreshView();
                     }
                     );
@@ -51,7 +54,7 @@ namespace TestProjectMVVM
                     () =>
                     {
                         addFormTeacher = new AddFormTeacher();
-                        addFormTeacher.ShowDialog();                        
+                        addFormTeacher.ShowDialog();
                         RefreshView();
                     }
                     );
@@ -72,7 +75,7 @@ namespace TestProjectMVVM
                         _schoolContext.SaveChanges();
                         Teachers = new List<Teacher>(Teachers);
                     }
-                    else if(SelectedItem != null && SelectedItem.GetType() == typeof(Student))
+                    else if (SelectedItem != null && SelectedItem.GetType() == typeof(Student))
                     {
                         Students.Remove((Student)SelectedItem);
                         _schoolContext.Students.Remove((Student)SelectedItem);
@@ -84,8 +87,37 @@ namespace TestProjectMVVM
             }
         }
 
-        public void RefreshView()
+        public ICommand ChangeButton
         {
+            get
+            {
+                return new ButtonsCommand(
+                    () =>
+                    {
+                        if (SelectedItem == null)
+                        {
+                            MessageBox.Show("Вы не выбрали элемент для изменения");
+                        }
+                        else if (SelectedItem.GetType() == typeof(Teacher))
+                        {
+                            changeFormTeacher = new ChangeFormTeacher();
+                            changeFormTeacher.ShowDialog();
+                            //Teachers = new List<Teacher>(Teachers);
+                        }
+                        else if (SelectedItem.GetType() == typeof(Student))
+                        {
+                            changeFormStudent = new ChangeFormStudent();
+                            changeFormStudent.ShowDialog();
+                            //Students = new List<Student>(Students);
+                        }
+                        RefreshView();
+                    }
+                    );
+            }
+        }
+
+        public void RefreshView()
+        {           
             Students = (from student in _schoolContext.Students select student).ToList();
             Teachers = (from teacher in _schoolContext.Teachers select teacher).ToList();
         }
@@ -108,6 +140,6 @@ namespace TestProjectMVVM
             }
         }
 
-        public SelectedItem SelectedItem { get; set; }
+        public static SelectedItem SelectedItem { get; set; }
     }
 }

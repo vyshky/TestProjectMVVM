@@ -110,13 +110,42 @@ namespace TestProjectMVVM
                 return new ButtonsCommand(
                     () =>
                     {
-                            Teacher newTeacher = new Teacher()
-                            {
-                                FIO = fio,
-                                Facility = facility
-                            };
-                            _schoolContext.Teachers.Add(newTeacher);
-                            _schoolContext.SaveChanges();
+                        Teacher newTeacher = new Teacher()
+                        {
+                            FIO = fio,
+                            Facility = facility
+                        };
+                        _schoolContext.Teachers.Add(newTeacher);
+                        _schoolContext.SaveChanges();
+                    }
+                    );
+            }
+        }
+
+        public ICommand UpdateButton
+        {
+            get
+            {
+                return new ButtonsCommand(
+                    () =>
+                    {
+                        if (ViewModel.SelectedItem.GetType() == typeof(Teacher))
+                        {
+                            var selectedItem = (Teacher)ViewModel.SelectedItem;
+                            Teacher teacher = _schoolContext.Teachers.Find(selectedItem.Id);
+                            teacher.FIO = fio;
+                            teacher.Facility = facility;
+                        }
+                        else if (ViewModel.SelectedItem.GetType() == typeof(Student))
+                        {
+                            var selectedItem = (Student)ViewModel.SelectedItem;
+                            Student student = _schoolContext.Students.Find(selectedItem.Id);
+                            student.FIO = fio;
+                            student.Teacher = teacher;
+                            student.Group = group;
+                            student.GradePointAverage = gpa;
+                        }
+                        _schoolContext.SaveChanges();
                     }
                     );
             }
@@ -131,6 +160,8 @@ namespace TestProjectMVVM
                     {
                         ViewModel.addFormStudent?.Close();
                         ViewModel.addFormTeacher?.Close();
+                        ViewModel.changeFormTeacher?.Close();
+                        ViewModel.changeFormStudent?.Close();
                     }
                     );
             }
