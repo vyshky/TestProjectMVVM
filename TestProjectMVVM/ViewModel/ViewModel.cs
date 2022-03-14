@@ -25,8 +25,7 @@ namespace TestProjectMVVM
         public static ChangeFormTeacher changeFormTeacher;
 
         public ViewModel()
-        {
-            _schoolContext = new SchoolContext();
+        {           
             _students = new List<Student>();
             _teacher = new List<Teacher>();
             RefreshView();
@@ -102,22 +101,22 @@ namespace TestProjectMVVM
                         {
                             changeFormTeacher = new ChangeFormTeacher();
                             changeFormTeacher.ShowDialog();
-                            //Teachers = new List<Teacher>(Teachers);
+                            RefreshView();
                         }
                         else if (SelectedItem.GetType() == typeof(Student))
                         {
                             changeFormStudent = new ChangeFormStudent();
                             changeFormStudent.ShowDialog();
-                            //Students = new List<Student>(Students);
-                        }
-                        RefreshView();
+                            RefreshView();
+                        }                        
                     }
                     );
             }
         }
 
         public void RefreshView()
-        {           
+        {
+            _schoolContext = new SchoolContext();
             Students = (from student in _schoolContext.Students select student).ToList();
             Teachers = (from teacher in _schoolContext.Teachers select teacher).ToList();
         }
