@@ -25,10 +25,41 @@ namespace TestProjectMVVM
         public static ChangeFormTeacher changeFormTeacher;
 
         public ViewModel()
-        {           
+        {
             _students = new List<Student>();
             _teacher = new List<Teacher>();
             RefreshView();
+        }
+
+        string _findText;
+        public string FindStudent
+        {
+            set
+            {
+                _findText = value;
+                FindStudents(_findText);
+            }
+        }
+        public string FindTeacher
+        {
+            set
+            {
+                _findText = value;
+                FindTeachers(_findText);
+            }
+        }
+
+        void FindStudents(string text = "")
+        {
+            Students = (from student in _schoolContext.Students
+                        where student.FIO.Contains(text)
+                        select student).ToList();
+        }
+        void FindTeachers(string text = "")
+        {
+            Teachers = (from student in _schoolContext.Teachers
+                       where student.FIO.Contains(text)
+                        select student).ToList();
         }
 
         public ICommand AddStudent
@@ -108,7 +139,7 @@ namespace TestProjectMVVM
                             changeFormStudent = new ChangeFormStudent();
                             changeFormStudent.ShowDialog();
                             RefreshView();
-                        }                        
+                        }
                     }
                     );
             }

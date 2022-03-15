@@ -56,20 +56,39 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
+        <!--панель добавления,удаления,изменения--> 
         <WrapPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" >
             <Button Command="{Binding AddStudent,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить студента</Button>
             <Button Command="{Binding DeleteButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
             <Button Command="{Binding ChangeButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>
         </WrapPanel>
 
+        <!--панель добавления,удаления,изменения-->
         <WrapPanel Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2" >
             <Button Command="{Binding AddTeacher,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" >Добавить преподавателя</Button>
             <Button Command="{Binding DeleteButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Удалить</Button>
             <Button Command="{Binding ChangeButton,UpdateSourceTrigger=PropertyChanged}" Background="RoyalBlue" Margin="5" Width="80" >Изменить</Button>
         </WrapPanel>
 
+        <!--Селектор-->
         <ListBox ItemsSource="{Binding Students, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource StudentsList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="2"></ListBox>
         <ListBox ItemsSource="{Binding Teachers, UpdateSourceTrigger=PropertyChanged}" ItemTemplate="{StaticResource TeachersList}" SelectedItem="{Binding SelectedItem}" Grid.Row="2" Grid.Column="2"  Grid.ColumnSpan="2"></ListBox>
+
+
+        <!--сортировка-->
+        <WrapPanel Grid.Column="0" Grid.Row="1">
+            <CheckBox Content="{Binding ChBoxSort, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по группе" Margin="10,10,20,0"/>
+            <CheckBox ToolTip="Сортировать по баллам" Margin="10,10,20,0"/>
+        </WrapPanel>  
+
+        <WrapPanel Grid.Column="2" Grid.Row="1">
+            <CheckBox Content="{Binding CB1, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по имени" Margin="10,10,20,0"/>
+            <CheckBox ToolTip="Сортировать по предмету" Margin="10,10,20,0"/>
+        </WrapPanel>
+        
+        <!--Поиск-->
+        <TextBox Text="{Binding FindStudent,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.Row="1"></TextBox>
+        <TextBox Text="{Binding FindTeacher,UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.Row="1"></TextBox>
 
     </Grid>
 </Window>
