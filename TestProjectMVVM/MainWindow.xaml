@@ -78,13 +78,13 @@
         
         <!--сортировка-->
         <WrapPanel Grid.Column="0" Grid.Row="1">
-            <CheckBox Content="{Binding ChBoxSortStudents, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по группе" Margin="10,10,20,0"/>
-            <CheckBox ToolTip="Сортировать по баллам" Margin="10,10,20,0"/>
+            <CheckBox IsChecked="{Binding ChBoxSortStudentsName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по имени" Margin="10,10,20,0"/>
+            <CheckBox IsChecked="{Binding ChBoxSortStudentsGroup, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по группе" Margin="10,10,20,0"/>
         </WrapPanel>
 
         <WrapPanel Grid.Column="2" Grid.Row="1">
-            <CheckBox Content="{Binding ChBoxSortTeachers, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по имени" Margin="10,10,20,0"/>
-            <CheckBox ToolTip="Сортировать по предмету" Margin="10,10,20,0"/>
+            <CheckBox IsChecked="{Binding ChBoxSortTeachersName, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по имени" Margin="10,10,20,0"/>
+            <CheckBox IsChecked="{Binding ChBoxSortTeachersFacility, UpdateSourceTrigger=PropertyChanged}" ToolTip="Сортировать по предмету" Margin="10,10,20,0"/>
         </WrapPanel>
 
         <!--Поиск-->

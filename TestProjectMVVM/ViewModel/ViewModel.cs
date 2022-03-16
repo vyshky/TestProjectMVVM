@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Linq;
 using System.Windows;
+using System.Data.Entity;
 
 namespace TestProjectMVVM
 {
@@ -23,6 +24,11 @@ namespace TestProjectMVVM
         public static AddFormTeacher addFormTeacher;
         public static ChangeFormStudent changeFormStudent;
         public static ChangeFormTeacher changeFormTeacher;
+        string _findText;
+        bool _chBoxSortStudentsName;
+        bool _chBoxSortStudentsGroup;
+        bool _chBoxSortTeachersName;
+        bool _chBoxSortTeachersFacility;
 
         public ViewModel()
         {
@@ -31,7 +37,119 @@ namespace TestProjectMVVM
             RefreshView();
         }
 
-        string _findText;
+        //Сортировка 
+        ////////////////////////////////////////////////////////////////////////////////////
+        public bool ChBoxSortStudentsName
+        {
+            get
+            {
+                return _chBoxSortStudentsName;
+            }
+            set
+            {
+                _chBoxSortStudentsName = value;
+                SortStudents();
+
+            }
+        }
+        public bool ChBoxSortStudentsGroup
+        {
+            get
+            {
+                return _chBoxSortStudentsGroup;
+            }
+            set
+            {
+                _chBoxSortStudentsGroup = value;
+                SortStudents();
+            }
+        }
+        public bool ChBoxSortTeachersName
+        {
+            get
+            {
+                return _chBoxSortTeachersName;
+            }
+            set
+            {
+                _chBoxSortTeachersName = value;
+                SortTeachers();
+
+            }
+        }
+        public bool ChBoxSortTeachersFacility
+        {
+            get
+            {
+                return _chBoxSortTeachersFacility;
+            }
+            set
+            {
+                _chBoxSortTeachersFacility = value;
+                SortTeachers();
+            }
+        }
+
+        public void SortStudents()
+        {
+            if (_chBoxSortStudentsName && _chBoxSortStudentsGroup)
+            {
+                Students = (from student in _schoolContext.Students
+                            orderby student.FIO, student.Group ascending
+                            select student).ToList();
+            }
+            else if (_chBoxSortStudentsName && _chBoxSortStudentsGroup == false)
+            {
+                Students = (from student in _schoolContext.Students
+                            orderby student.FIO ascending
+                            select student).ToList();
+            }
+            else if (_chBoxSortStudentsName == false && _chBoxSortStudentsGroup)
+            {
+                Students = (from student in _schoolContext.Students
+                            orderby student.Group ascending
+                            select student).ToList();
+            }
+            else
+            {
+                Students = (from student in _schoolContext.Students
+                            select student).ToList();
+            }
+        }
+
+        public void SortTeachers()
+        {
+            if (_chBoxSortTeachersName && _chBoxSortTeachersFacility)
+            {
+                Teachers = (from teacher in _schoolContext.Teachers
+                            orderby teacher.FIO, teacher.Facility ascending
+                            select teacher).ToList();
+            }
+            else if (_chBoxSortTeachersName && _chBoxSortTeachersFacility == false)
+            {
+                Teachers = (from teacher in _schoolContext.Teachers
+                            orderby teacher.FIO ascending
+                            select teacher).ToList();
+            }
+            else if (_chBoxSortTeachersName == false && _chBoxSortTeachersFacility)
+            {
+                Teachers = (from teacher in _schoolContext.Teachers
+                            orderby teacher.Facility ascending
+                            select teacher).ToList();
+            }
+            else
+            {
+                Teachers = (from teacher in _schoolContext.Teachers
+                            select teacher).ToList();
+            }
+        }
+        ////////////////////////////////////////////////////////////////////////////////////
+     
+
+
+
+        // Поиск
+        ////////////////////////////////////////////////////////////////////////////////////
         public string FindStudent
         {
             set
@@ -58,10 +176,15 @@ namespace TestProjectMVVM
         void FindTeachers(string text = "")
         {
             Teachers = (from student in _schoolContext.Teachers
-                       where student.FIO.Contains(text)
+                        where student.FIO.Contains(text)
                         select student).ToList();
         }
 
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+        // добавить удалить изменить
+        ////////////////////////////////////////////////////////////////////////////////////
         public ICommand AddStudent
         {
             get
@@ -144,13 +267,21 @@ namespace TestProjectMVVM
                     );
             }
         }
+        ////////////////////////////////////////////////////////////////////////////////////
 
+
+        // обновить view
         public void RefreshView()
         {
             _schoolContext = new SchoolContext();
             Students = (from student in _schoolContext.Students select student).ToList();
             Teachers = (from teacher in _schoolContext.Teachers select teacher).ToList();
         }
+
+        ////////////////////////////////////////////////////////////////////////////////////
+
+
+        // листы 
         public List<Student> Students
         {
             get { return _students; }
@@ -169,7 +300,11 @@ namespace TestProjectMVVM
                 PropertyChanging();
             }
         }
+        ////////////////////////////////////////////////////////////////////////////////////
 
+
+        // селектор
         public static SelectedItem SelectedItem { get; set; }
+        ////////////////////////////////////////////////////////////////////////////////////
     }
 }
